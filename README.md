@@ -1,2 +1,164 @@
 # drone-eye
-🦅 Sentinel-AI: Autonomous Edge Reconnaissance System“The Digital Spotter That Never Blinks.”🚀 Executive SummarySentinel-AI is a next-generation, real-time tactical situational awareness system designed to democratize military-grade intelligence. By leveraging lightweight neural networks (YOLOv8 Nano) and edge computing, we transform standard optical feeds into actionable combat data. Our system detects, tracks, and classifies threats in milliseconds—reducing the cognitive load on operators and providing a crucial asymmetric advantage in modern conflict zones.⚔️ The Problem: The "Intelligence Gap"In modern warfare and border security, intelligence is often the deciding factor. However, current solutions suffer from three critical flaws:Prohibitive Cost: Military-grade surveillance drones (like the Reaper) cost millions, limiting their availability to elite units.Latency & Bandwidth: Traditional systems rely on streaming heavy video back to HQ for analysis. In jammed or low-bandwidth environments, this link breaks, and the intel is lost.Human Fatigue: Operators staring at video feeds for hours inevitably miss subtle movements or camouflaged threats due to exhaustion.🛡️ The Solution: Sentinel-AISentinel-AI bridges this gap by moving the "brain" to the edge. It is a software-defined reconnaissance suite that runs locally on portable hardware (laptops, embedded drone computers), requiring no internet connection or massive server farms.Key Innovations:Latency-First Architecture: Built on the YOLOv8n architecture, our system prioritizes speed (High FPS) without sacrificing detection accuracy. It doesn't just record video; it understands it instantly.Hardware Agnostic: Whether running on a Ground Control Station (laptop) or an onboard drone flight computer (Jetson/Raspberry Pi), the core logic remains the same.Adaptive Mission Profiles: unlike rigid hardware systems, Sentinel-AI adapts via software. We can swap "threat libraries" (model weights) in minutes to switch from tracking vehicles to tracking personnel.🛠️ Current Prototype Status (Phase 1)Ground Station Simulation: We have successfully deployed the inference engine on a portable ground station (Laptop + CUDA GPU).Live Optical Feed: Using a webcam to simulate a drone's video transmission, the system currently demonstrates real-time detection and tracking of dynamic targets (Humans, Vehicles) with high confidence.Proof of Concept: This validates the end-to-end pipeline: Video Capture $\rightarrow$ Neural Inference $\rightarrow$ Threat Identification $\rightarrow$ User Alert.🔮 Future Roadmap (Phase 2 - In Active Development)We are currently processing a specialized Military Asset Dataset to upgrade the system's tactical capabilities.Target Discrimination: Moving beyond generic "Car/Person" labels to specific tactical classes: Armored Personnel Carrier vs. Civilian Truck, Armed Combatant vs. Non-Combatant.Aerial Deployment: The software is ready to be flashed onto an autonomous FPV drone for field testing.💡 Why It MattersSentinel-AI is not just a camera; it is a Force Multiplier. It provides the capabilities of a million-dollar defense contract using open-source efficiency and consumer hardware. It ensures that in the heat of the moment, no movement goes unnoticed and no threat goes unseen.Technology StackCore AI Engine: Ultralytics YOLOv8 (Nano)Language: Python 3.12Computer Vision: OpenCVAcceleration: NVIDIA CUDA / T4 Optimization
+🦅 Sentinel-AI
+Autonomous Edge Reconnaissance System
+
+“The Digital Spotter That Never Blinks.”
+
+📌 Overview
+
+Sentinel-AI is a lightweight, real-time situational-awareness system designed for research, disaster response, border monitoring, wildlife tracking, and security automation.
+It uses efficient neural networks running directly on edge hardware, enabling instant analysis without cloud dependency.
+
+This repository contains the core inference engine, edge-processing pipeline, and modular architecture that allows the system to adapt to different mission profiles.
+
+⚠️ Ethical Notice
+This project is for educational, research, and civilian safety applications only.
+It must NOT be used to cause harm, violate privacy, or perform unauthorized surveillance.
+
+🚀 Key Features
+⚡ Edge-First AI
+
+Built on YOLOv8 Nano for ultra-fast inference.
+
+Optimized for low-power CPUs/GPUs (Jetson, Raspberry Pi, laptops).
+
+No cloud required → ideal for low-bandwidth or jammed environments.
+
+👁️ Real-Time Detection
+
+Processes live optical feeds via OpenCV.
+
+Detects and tracks objects with high FPS.
+
+Modular detection profiles (human, vehicle, wildlife, etc.)
+
+🧩 Modular Threat/Asset Library
+
+Swap model weights to change detection focus:
+
+Personnel detection
+
+Vehicle detection
+
+Wildlife or environmental monitoring
+
+Infrastructure/asset analysis
+
+🖥️ Hardware-Agnostic Design
+
+Runs on:
+
+Laptops with CUDA
+
+Jetson Nano / Orin
+
+Raspberry Pi + NPU accelerators
+
+Compact field computers
+
+🛠️ Tech Stack
+Layer	Technology
+Core AI Engine	Ultralytics YOLOv8n
+Programming Language	Python 3.12
+Computer Vision	OpenCV
+Acceleration	NVIDIA CUDA (optional)
+Deployment	Edge devices, drones, laptops
+📸 System Pipeline
+Video Feed → Preprocessing → Object Detection → Tracking → Event Alerts
+
+Capture: OpenCV video stream or onboard camera
+
+Inference: YOLOv8 Nano (FP16 optimized)
+
+Tracking: ByteTrack / SORT (configurable)
+
+Event Logic: Configurable rule engine for alerts
+
+Output: Annotated video + JSON logs
+
+🧪 Current Prototype (Phase 1)
+
+Real-time detection running on ground station GPU laptop
+
+Web-cam based simulated drone feed
+
+Human/vehicle detection with high FPS
+
+Working end-to-end pipeline:
+Frame → AI Inference → Classification → On-Screen Alerts
+
+🔮 Roadmap (Phase 2 – In Progress)
+🎯 Enhanced Classification
+
+Training on specialized datasets (vehicles, assets, gear types)
+
+Improved distinction across object sub-types
+
+🚁 Aerial Integration
+
+Deployment to lightweight autonomous platforms
+
+Edge-only inference for offline operation
+
+🗂️ Mission Profiles
+
+Switch between detection modes by loading different weight files
+
+For example: wildlife monitoring, crowd analysis, infrastructure inspection
+
+📦 Installation
+git clone https://github.com/yourname/Sentinel-AI
+cd Sentinel-AI
+pip install -r requirements.txt
+
+▶️ Running the Demo
+python sentinel_ai.py --source 0 --model weights/yolov8n.pt
+
+📁 Project Structure
+Sentinel-AI/
+│
+├── models/               # Model weights (generic or custom)
+├── configs/              # Mission profiles / detection configs
+├── core/
+│   ├── detector.py       # YOLO inference engine
+│   ├── tracker.py        # Object tracking module
+│   ├── pipeline.py       # Frame → Inference → Alert logic
+│
+├── utils/
+│   ├── visualization.py  # Bounding boxes, overlays
+│   ├── logger.py         # JSON logs / event data
+│
+├── sentinel_ai.py        # Main entry script
+└── README.md
+
+🛡️ Ethics, Compliance & Safety
+
+Sentinel-AI is intended for:
+✔ Disaster response
+✔ Wildlife protection
+✔ Border safety monitoring
+✔ Threat-free research and automation
+✔ Civilian infrastructure safety
+
+It must NOT be used for:
+✘ Targeting or weapon guidance
+✘ Harmful autonomous operations
+✘ Surveillance of individuals without consent
+✘ Military deployment without legal authorization
+
+🤝 Contributing
+
+We welcome contributions related to:
+
+Model optimization
+
+Edge device deployment
+
+Dataset improvement
+
+Ethical AI research
+
+📜 License
+
+Choose a license such as MIT, Apache-2.0, or CC-BY-NC depending on your goals.
+For sensitive AI applications, Non-Commercial license is recommended.
