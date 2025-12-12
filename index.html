@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Drone Recon Dashboard</title>
+    <style>
+        body { font-family: monospace; background: #222; color: #0f0; text-align: center; }
+        #map { background: #000; border: 2px solid #0f0; margin-top: 20px; }
+        .status { margin-top: 10px; color: #aaa; }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+</head>
+<body>
+    <h1>DRONE RECON MAP</h1>
+    <div class="status">Live Metadata Stream | Bandwidth: <span id="bw">~0.2 kbps</span></div>
+    <canvas id="map" width="400" height="400"></canvas>
+
+    <script>
+        const socket = io();
+        const canvas = document.getElementById('map');
+        const ctx = canvas.getContext('2d');
+        
+        // Fade effect variables
+        ctx.fillStyle = "rgba(0, 0, 0, 1)";
+        ctx.fillRect(0, 0, 400, 400);
+
+        socket.on('map_update', function(msg) {
+            msg.updates.forEach(obj => {
+                const [x, y] = obj.pos;
+                
+                // Draw target
+                ctx.beginPath();
+                ctx.arc(x, y, 5, 0, 2 * Math.PI);
+                ctx.fillStyle = obj.class === 'person' ? '#ff0000' : '#00ffff'; // Red for person, Cyan for others
+                ctx.fill();
+                
+                // Draw Label
+                ctx.font = "10px Arial";
+                ctx.fillStyle = "#fff";
+                ctx.fillText(obj.class, x + 8, y + 3);
+            });
+            
+            // Flash effect for update
+            document.getElementById('bw').style.color = '#fff';
+            setTimeout(() => document.getElementById('bw').style.color = '#aaa', 100);
+        });
+
+        // Optional: Fade trails over time
+        setInterval(() => {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, 400, 400);
+        }, 100);
+    </script>
+</body>
+</html>
